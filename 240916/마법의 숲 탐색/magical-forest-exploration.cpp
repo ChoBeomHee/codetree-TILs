@@ -152,7 +152,7 @@ void moveFairy(int x, int y){
         }
     }
 
-    answer += value + 1;
+    answer += (value + 1);
 }
 
 void clearForest(){
@@ -175,6 +175,12 @@ void printForest(){
 
 int main(){
     cin >> R >> C >> K;
+    for(int i = 0; i < R; i++){
+        for(int j = 0; j < C; j++){
+            forest[i][j] = 0;
+            exitarray[i][j] = 0;
+        }
+    }
 
     for(int i = 0; i < K; i++){
         int c, d; cin >> c >> d;
