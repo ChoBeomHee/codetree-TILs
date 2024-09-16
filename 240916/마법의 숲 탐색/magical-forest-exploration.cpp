@@ -97,7 +97,7 @@ bool moveGolem(int r, int c, int exit){
     }else{ // 이동할 수 없음
         if(!check_bound(r, c)){ // 현재 골렘이 바운더리 안에 없음
             return false;
-        }
+        }else {
         forest[r][c] = golidx;
         for(int i = 0; i < 4; i++){
             forest[r + dr[i]][c + dc[i]] = golidx;
@@ -111,6 +111,7 @@ bool moveGolem(int r, int c, int exit){
         fy = c;
 
         return true;
+        }
     }
 }
 
