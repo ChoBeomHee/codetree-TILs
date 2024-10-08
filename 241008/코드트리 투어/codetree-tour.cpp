@@ -7,8 +7,8 @@ int n, m;
 vector<pair<int, int>> graph[MAX];
 priority_queue<pair<pair<int, int>, int>> contents;
 int dist[MAX];
-int destination[MAX];
-bool isDelete[MAX];
+int destination[30001];
+bool isDelete[30001];
 
 int start = 0;
 
@@ -97,6 +97,7 @@ int main()
                     continue;
                 flag = true;
                 cout << idx << '\n';
+                isDelete[idx] = true;
                 break;
             }
 
