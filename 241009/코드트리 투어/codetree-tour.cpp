@@ -126,16 +126,29 @@ int main()
             priority_queue<pair<pair<int, int>, int>> tmp_pq;
 
             while (!contents.empty()){
-                int idx = contents.top().first.second;
-                int value = contents.top().second - dist[destination[-idx]];
-                int origin = contents.top().second;
+                pair<pair<int, int>, int> current = contents.top();
+
+                int idx = current.first.second;
+                int cost = current.second;
+                int value = cost - dist[destination[-idx]];
                 contents.pop();
-                if (!isDelete[-idx]) {   
-                    tmp_pq.push({{value, idx}, origin});
+
+                if (!isDelete[-idx]) {
+                    tmp_pq.push(current);
                 }
             }
 
-            contents = tmp_pq;
+            while(!tmp_pq.empty()){
+                pair<pair<int, int>, int> current = tmp_pq.top();
+
+                int idx = current.first.second;
+                int cost = current.second;
+                int value = cost - dist[destination[-idx]];
+
+                tmp_pq.pop();
+                contents.push({{value, idx}, cost});
+            }
+
         }
     }
 }
