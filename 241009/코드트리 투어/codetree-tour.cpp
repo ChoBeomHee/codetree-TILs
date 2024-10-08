@@ -26,13 +26,9 @@ void dijk()
     while (!pq.empty())
     {
         int nowNode = pq.top().second;
-        int currentDist = -pq.top().first;
-
         pq.pop();
-
-        if (currentDist > dist[nowNode]) continue;
-        
-        for (int i = 0; i < graph[nowNode].size(); i++){
+        for (int i = 0; i < graph[nowNode].size(); i++)
+        {
             int nextNode = graph[nowNode][i].first;
             int cost = graph[nowNode][i].second;
 
@@ -90,18 +86,23 @@ int main()
 
             isDelete[idx] = true;
         }
-        else if (commend == 400)
-        {
+        else if (commend == 400){
             bool flag = false;
 
             priority_queue<pair<pair<int, int>, int>> tmp = contents;
-
+            priority_queue<pair<pair<int, int>, int>> save;
             while (!tmp.empty())
             {
                 int cost = tmp.top().first.first;
                 int idx = -tmp.top().first.second;
+                pair<pair<int, int>, int> t = tmp.top();
                 tmp.pop();
-                if (cost < 0 || isDelete[idx]) continue;
+
+                if (cost < 0) break; // 작으면 나감
+                if (isDelete[idx]) {
+                    save.push(t);
+                    continue;
+                }
 
                 flag = true;
                 cout << idx << '\n';
@@ -130,7 +131,7 @@ int main()
                 int value = contents.top().second - dist[destination[-idx]];
                 int origin = contents.top().second;
                 contents.pop();
-                if (isDelete[-idx] == false) {    // 삭제된 노드가 아니면
+                if (!isDelete[-idx]) {   
                     tmp_pq.push({{value, idx}, origin});
                 }
             }
