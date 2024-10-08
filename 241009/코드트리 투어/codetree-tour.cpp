@@ -17,7 +17,7 @@ void dijk()
 {
     priority_queue<pair<int, int>> pq;
 
-    memset(dist, 10101001, sizeof dist);
+    memset(dist, 10101010, sizeof dist);
     pq.push({0, start});
     dist[start] = 0;
 
@@ -88,29 +88,40 @@ int main()
             bool flag = false;
 
             priority_queue<pair<pair<int, int>, int>> tmp = contents;
-            
+            priority_queue<pair<pair<int, int>, int>> save;
             while (!tmp.empty())
             {
+                int cost = tmp.top().first.first;
+                int idx = -tmp.top().first.second;
                 pair<pair<int, int>, int> t = tmp.top();
-                int cost = t.first.first;
-                int idx = - t.first.second;
+
+                //cout << "값: " << cost << " idx: " << idx << endl;
                 tmp.pop();
 
-                if(isDelete[idx]){ // 삭제 됐으면
-                    contents.pop();
-                }else{ // 삭제 안됨
-                    flag = true;
-                    if(cost < 0){
-                        cout << -1 << '\n';
-                    }else{
-                        isDelete[idx] = true;
-                        cout << idx << '\n';
-                    }
-                    break;
+                
+                if (isDelete[idx]) { // 삭제된거면 없어져야함
+                    continue;
                 }
-            }
 
-            if(!flag) cout << -1 << '\n';
+                if (cost < 0) {
+                    save.push(t);
+                    continue;
+                }
+                save.push(t);
+
+                if(flag) continue;
+                
+                flag = true;
+                cout << idx << '\n';
+
+                isDelete[idx] = true;
+            }
+            //cout << "=======" << endl;
+
+            contents = save;
+
+            if (!flag)
+                cout << -1 << '\n';
         }
         else if (commend == 500)
         {
@@ -124,29 +135,16 @@ int main()
             priority_queue<pair<pair<int, int>, int>> tmp_pq;
 
             while (!contents.empty()){
-                pair<pair<int, int>, int> current = contents.top();
-
-                int idx = current.first.second;
-                int cost = current.second;
-                int value = cost - dist[destination[-idx]];
+                int idx = contents.top().first.second;
+                int value = contents.top().second - dist[destination[-idx]];
+                int origin = contents.top().second;
                 contents.pop();
-
-                if (!isDelete[-idx]) {
-                    tmp_pq.push(current);
+                if (!isDelete[-idx]) {   
+                    tmp_pq.push({{value, idx}, origin});
                 }
             }
 
-            while(!tmp_pq.empty()){
-                pair<pair<int, int>, int> current = tmp_pq.top();
-
-                int idx = current.first.second;
-                int cost = current.second;
-                int value = cost - dist[destination[-idx]];
-
-                tmp_pq.pop();
-                contents.push({{value, idx}, cost});
-            }
-
+            contents = tmp_pq;
         }
     }
 }
