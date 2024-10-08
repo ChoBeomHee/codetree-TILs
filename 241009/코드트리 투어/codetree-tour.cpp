@@ -86,19 +86,23 @@ int main()
 
             isDelete[idx] = true;
         }
-        else if (commend == 400)
-        {
+        else if (commend == 400){
             bool flag = false;
 
             priority_queue<pair<pair<int, int>, int>> tmp = contents;
-
+            priority_queue<pair<pair<int, int>, int>> save;
             while (!tmp.empty())
             {
                 int cost = tmp.top().first.first;
                 int idx = -tmp.top().first.second;
+                pair<pair<int, int>, int> t = tmp.top();
                 tmp.pop();
-                if (cost < 0) break;
-                if (isDelete[idx]) continue;
+
+                if (cost < 0) break; // 작으면 나감
+                if (isDelete[idx]) {
+                    save.push(t);
+                    continue;
+                }
 
                 flag = true;
                 cout << idx << '\n';
@@ -108,7 +112,10 @@ int main()
                 break;
             }
 
-            contents = tmp;
+            // while(!save.empty()){
+            //     contents.push(save.top());
+            //     save.pop();
+            // }
 
             if (!flag)
                 cout << -1 << '\n';
