@@ -1,6 +1,5 @@
 #include <iostream>
 #include <queue>
-#include <cstring>
 #define MAX 2001
 
 using namespace std;
@@ -17,7 +16,10 @@ void dijk()
 {
     priority_queue<pair<int, int>> pq;
 
-    memset(dist, 10101010, sizeof dist);
+    for (int i = 0; i <= n; i++)
+    {
+        dist[i] = 10101010;
+    }
     pq.push({0, start});
     dist[start] = 0;
 
@@ -88,40 +90,29 @@ int main()
             bool flag = false;
 
             priority_queue<pair<pair<int, int>, int>> tmp = contents;
-            priority_queue<pair<pair<int, int>, int>> save;
+            
             while (!tmp.empty())
             {
-                int cost = tmp.top().first.first;
-                int idx = -tmp.top().first.second;
                 pair<pair<int, int>, int> t = tmp.top();
-
-                //cout << "값: " << cost << " idx: " << idx << endl;
+                int cost = t.first.first;
+                int idx = - t.first.second;
                 tmp.pop();
 
-                
-                if (isDelete[idx]) { // 삭제된거면 없어져야함
-                    continue;
+                if(isDelete[idx]){ // 삭제 됐으면
+                    contents.pop();
+                }else{ // 삭제 안됨
+                    flag = true;
+                    if(cost < 0){
+                        cout << -1 << '\n';
+                    }else{
+                        isDelete[idx] = true;
+                        cout << idx << '\n';
+                    }
+                    break;
                 }
-
-                if (cost < 0) {
-                    save.push(t);
-                    continue;
-                }
-                save.push(t);
-
-                if(flag) continue;
-                
-                flag = true;
-                cout << idx << '\n';
-
-                isDelete[idx] = true;
             }
-            //cout << "=======" << endl;
 
-            contents = save;
-
-            if (!flag)
-                cout << -1 << '\n';
+            if(!flag) cout << -1 << '\n';
         }
         else if (commend == 500)
         {
