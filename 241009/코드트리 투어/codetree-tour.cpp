@@ -96,14 +96,18 @@ int main()
                 int cost = tmp.top().first.first;
                 int idx = -tmp.top().first.second;
                 pair<pair<int, int>, int> t = tmp.top();
-                tmp.pop();
 
-                if (cost < 0) break; // 작으면 나감
+                if (cost < 0) {
+                    break;
+                } // 작으면 나감
                 if (isDelete[idx]) {
                     save.push(t);
+                    tmp.pop();
+                    
                     continue;
                 }
 
+                tmp.pop();
                 flag = true;
                 cout << idx << '\n';
 
@@ -112,10 +116,10 @@ int main()
                 break;
             }
 
-            // while(!save.empty()){
-            //     contents.push(save.top());
-            //     save.pop();
-            // }
+            while(!save.empty()){
+                contents.push(save.top());
+                save.pop();
+            }
 
             if (!flag)
                 cout << -1 << '\n';
