@@ -86,15 +86,18 @@ int main()
             bool flag = false;
 
             priority_queue<pair<pair<int, int>, int>> tmp_pq = contents;
-
+            priority_queue<pair<pair<int, int>, int>> after_pq;
             while (!tmp_pq.empty())
             {
                 int cost = tmp_pq.top().first.first;
                 int idx = -tmp_pq.top().first.second;
-                tmp_pq.pop();
 
-                if (isDelete[idx] || cost < 0)
+                if (isDelete[idx] || cost < 0){
+                    after_pq.push(tmp_pq.top());
+                    tmp_pq.pop();
                     continue;
+                }
+                tmp_pq.pop();
                 flag = true;
                 cout << idx << '\n';
                 isDelete[idx] = true;
@@ -115,9 +118,6 @@ int main()
 
             dijk();
 
-            // for(int i = 0; i <= n; i++) cout << dist[i] << ' ';
-            // cout << endl;
-
             priority_queue<pair<pair<int, int>, int>> tmp_pq = contents;
 
             while (!contents.empty())
@@ -128,7 +128,6 @@ int main()
                 contents.pop();
                 if (!isDelete[-idx]){
                     tmp_pq.push({{value, idx}, origin});
-                    //cout << "새로운 값 : " << -idx << ' ' << value << endl;
                 }
             }
 
