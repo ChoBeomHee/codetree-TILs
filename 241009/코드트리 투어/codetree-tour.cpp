@@ -43,9 +43,6 @@ void dijk()
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
     int Q;
     cin >> Q;
 
@@ -93,9 +90,9 @@ int main()
             
             while (!tmp.empty())
             {
-                int cost = tmp.top().first.first;
-                int idx = -tmp.top().first.second;
                 pair<pair<int, int>, int> t = tmp.top();
+                int cost = t.first.first;
+                int idx = - t.first.second;
                 tmp.pop();
 
                 if(isDelete[idx]){ // 삭제 됐으면
