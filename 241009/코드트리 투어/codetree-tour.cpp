@@ -43,6 +43,9 @@ void dijk()
 
 int main()
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
     int Q;
     cin >> Q;
 
@@ -118,14 +121,12 @@ int main()
 
             priority_queue<pair<pair<int, int>, int>> tmp_pq;
 
-            while (!contents.empty())
-            {
+            while (!contents.empty()){
                 int idx = contents.top().first.second;
                 int value = contents.top().second - dist[destination[-idx]];
                 int origin = contents.top().second;
                 contents.pop();
-                if (!isDelete[-idx])
-                {   
+                if (!isDelete[-idx]) {   
                     tmp_pq.push({{value, idx}, origin});
                 }
             }
