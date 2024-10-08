@@ -97,7 +97,8 @@ int main()
                 int cost = tmp.top().first.first;
                 int idx = -tmp.top().first.second;
                 tmp.pop();
-                if (cost < 0 || isDelete[idx]) continue;
+                if (cost < 0) break;
+                if (isDelete[idx]) continue;
 
                 flag = true;
                 cout << idx << '\n';
