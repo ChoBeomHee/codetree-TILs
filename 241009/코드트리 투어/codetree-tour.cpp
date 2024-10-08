@@ -90,7 +90,6 @@ int main()
             bool flag = false;
 
             priority_queue<pair<pair<int, int>, int>> tmp = contents;
-            priority_queue<pair<pair<int, int>, int>> save;
             while (!tmp.empty())
             {
                 int cost = tmp.top().first.first;
@@ -98,22 +97,19 @@ int main()
                 pair<pair<int, int>, int> t = tmp.top();
                 tmp.pop();
 
-                if (cost < 0) break; // 작으면 나감
-                if (isDelete[idx]) {
-                    save.push(t);
-                    continue;
+                if(isDelete[idx]){ // 삭제 됐으면
+                    contents.pop();
+                }else{ // 삭제 안됨
+                    if(cost < 0){
+                        cout << -1 << '\n';
+                    }else{
+                        isDelete[idx] = true;
+                        cout << idx << '\n';
+                    }
+
+                    break;
                 }
-
-                flag = true;
-                cout << idx << '\n';
-
-                isDelete[idx] = true;
-
-                break;
             }
-
-            if (!flag)
-                cout << -1 << '\n';
         }
         else if (commend == 500)
         {
