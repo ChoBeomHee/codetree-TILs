@@ -71,6 +71,7 @@ int main()
             int id, rev, dest;
             cin >> id >> rev >> dest;
 
+            isDelete[id] = false;
             int value = rev - dist[dest];
             contents.push({{value, -id}, rev});
             destination[id] = dest;
