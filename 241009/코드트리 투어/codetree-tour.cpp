@@ -108,6 +108,8 @@ int main()
                 break;
             }
 
+            contents = tmp;
+
             if (!flag)
                 cout << -1 << '\n';
         }
