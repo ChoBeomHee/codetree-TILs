@@ -92,15 +92,24 @@
                     int cost = tmp_pq.top().first.first;
                     int idx = -tmp_pq.top().first.second;
 
-                    if (isDelete[idx] || cost < 0){
+                    if (cost < 0){
                         after_pq.push(tmp_pq.top());
                         tmp_pq.pop();
                         continue;
                     }
+
+                    if (isDelete[idx]){
+                        tmp_pq.pop();
+                        continue;
+                    }
+
                     tmp_pq.pop();
+                    
                     flag = true;
                     cout << idx << '\n';
+                    
                     isDelete[idx] = true;
+                    
                     break;
                 }
 
