@@ -87,27 +87,14 @@ int main()
         {
             bool flag = false;
 
-            priority_queue<pair<pair<int, int>, int>> before_pq;
-            priority_queue<pair<pair<int, int>, int>> after_pq;
+            priority_queue<pair<pair<int, int>, int>> tmp = contents;
 
-            while (!contents.empty())
+            while (!tmp.empty())
             {
-                int cost = contents.top().first.first;
-                int idx = -contents.top().first.second;
-                if (cost < 0)
-                {
-                    after_pq.push(contents.top());
-                    contents.pop();
-                    continue;
-                }
-
-                if (isDelete[idx])
-                {
-                    contents.pop();
-                    continue;
-                }
-
-                contents.pop();
+                int cost = tmp.top().first.first;
+                int idx = -tmp.top().first.second;
+                tmp.pop();
+                if (cost < 0 || isDelete[idx]) continue;
 
                 flag = true;
                 cout << idx << '\n';
@@ -116,14 +103,6 @@ int main()
 
                 break;
             }
-
-            while (!contents.empty())
-            {
-                after_pq.push(contents.top());
-                contents.pop();
-            }
-
-            contents = after_pq;
 
             if (!flag)
                 cout << -1 << '\n';
