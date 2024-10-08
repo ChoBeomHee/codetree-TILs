@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <cstring>
 #define MAX 2001
 
 using namespace std;
@@ -16,10 +17,7 @@ void dijk()
 {
     priority_queue<pair<int, int>> pq;
 
-    for (int i = 0; i <= n; i++)
-    {
-        dist[i] = 10101010;
-    }
+    memset(dist, 10101001, sizeof dist);
     pq.push({0, start});
     dist[start] = 0;
 
