@@ -97,29 +97,30 @@ int main()
                 int idx = -tmp.top().first.second;
                 pair<pair<int, int>, int> t = tmp.top();
 
-                if (cost < 0) {
-                    break;
-                } // 작으면 나감
-                if (isDelete[idx]) {
-                    save.push(t);
-                    tmp.pop();
-                    
+                //cout << "값: " << cost << " idx: " << idx << endl;
+                tmp.pop();
+
+                
+                if (isDelete[idx]) { // 삭제된거면 없어져야함
                     continue;
                 }
 
-                tmp.pop();
+                if (cost < 0) {
+                    save.push(t);
+                    continue;
+                }
+                save.push(t);
+
+                if(flag) continue;
+                
                 flag = true;
                 cout << idx << '\n';
 
                 isDelete[idx] = true;
-
-                break;
             }
+            //cout << "=======" << endl;
 
-            while(!save.empty()){
-                contents.push(save.top());
-                save.pop();
-            }
+            contents = save;
 
             if (!flag)
                 cout << -1 << '\n';
