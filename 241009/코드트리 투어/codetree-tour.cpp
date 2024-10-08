@@ -26,9 +26,13 @@ void dijk()
     while (!pq.empty())
     {
         int nowNode = pq.top().second;
+        int currentDist = -pq.top().first;
+
         pq.pop();
-        for (int i = 0; i < graph[nowNode].size(); i++)
-        {
+
+        if (currentDist > dist[nowNode]) continue;
+        
+        for (int i = 0; i < graph[nowNode].size(); i++){
             int nextNode = graph[nowNode][i].first;
             int cost = graph[nowNode][i].second;
 
@@ -86,41 +90,26 @@ int main()
 
             isDelete[idx] = true;
         }
-        else if (commend == 400){
+        else if (commend == 400)
+        {
             bool flag = false;
 
             priority_queue<pair<pair<int, int>, int>> tmp = contents;
-            priority_queue<pair<pair<int, int>, int>> save;
+
             while (!tmp.empty())
             {
                 int cost = tmp.top().first.first;
                 int idx = -tmp.top().first.second;
-                pair<pair<int, int>, int> t = tmp.top();
-
-                //cout << "값: " << cost << " idx: " << idx << endl;
                 tmp.pop();
+                if (cost < 0 || isDelete[idx]) continue;
 
-                
-                if (isDelete[idx]) { // 삭제된거면 없어져야함
-                    continue;
-                }
-
-                if (cost < 0) {
-                    save.push(t);
-                    continue;
-                }
-                save.push(t);
-
-                if(flag) continue;
-                
                 flag = true;
                 cout << idx << '\n';
 
                 isDelete[idx] = true;
-            }
-            //cout << "=======" << endl;
 
-            contents = save;
+                break;
+            }
 
             if (!flag)
                 cout << -1 << '\n';
@@ -141,7 +130,7 @@ int main()
                 int value = contents.top().second - dist[destination[-idx]];
                 int origin = contents.top().second;
                 contents.pop();
-                if (!isDelete[-idx]) {   
+                if (isDelete[-idx] == false) {    // 삭제된 노드가 아니면
                     tmp_pq.push({{value, idx}, origin});
                 }
             }
